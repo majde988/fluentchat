@@ -3,12 +3,15 @@
   "appName": "FluentChat",
   "webDir": "../public",
   "server": {
-    "url": "https://my-f-bc9c8.web.app",
-    "cleartext": true
+    "androidScheme": "https"
   },
   "plugins": {
     "PushNotifications": {
-      "presentationOptions": ["badge", "sound", "alert"]
+      "presentationOptions": [
+        "badge",
+        "sound",
+        "alert"
+      ]
     },
     "LocalNotifications": {
       "smallIcon": "ic_stat_icon",
