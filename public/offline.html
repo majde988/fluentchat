@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FluentChat - غير متصل</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Tajawal',sans-serif;
+      height:100vh;display:grid;place-items:center;
+      background:linear-gradient(135deg,#0a84ff,#6366f1);
+      color:#fff;text-align:center;padding:24px;
+    }
+    .card{
+      background:rgba(255,255,255,.15);
+      backdrop-filter:blur(20px);
+      border-radius:28px;padding:48px 40px;
+      max-width:440px;width:100%;
+    }
+    .icon{font-size:64px;margin-bottom:20px}
+    h1{font-size:28px;margin-bottom:12px}
+    p{opacity:.85;line-height:1.8;margin-bottom:24px}
+    button{
+      padding:14px 28px;border:2px solid #fff;
+      background:transparent;color:#fff;
+      border-radius:16px;font-size:16px;
+      font-family:'Tajawal';cursor:pointer;
+    }
+    button:hover{background:rgba(255,255,255,.2)}
+    .features{
+      display:flex;gap:20px;justify-content:center;
+      margin-top:28px;flex-wrap:wrap;
+    }
+    .feat{
+      display:flex;align-items:center;gap:8px;
+      font-size:13px;opacity:.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">📡</div>
+    <h1>أنت غير متصل بالإنترنت</h1>
+    <p>لا تقلق! رسائلك المحفوظة ستظهر عند عودة الاتصال. FluentChat يعمل بذكاء.</p>
+    <button onclick="location.reload()">🔄 إعادة المحاولة</button>
+    <div class="features">
+      <div class="feat">💾 رسائلك محفوظة</div>
+      <div class="feat">⚡ مزامنة تلقائية</div>
+      <div class="feat">🔒 بياناتك آمنة</div>
+    </div>
+  </div>
+</body>
+</html>

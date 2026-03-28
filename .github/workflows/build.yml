@@ -1,0 +1,98 @@
+name: Build FluentChat Apps
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: electron
+        run: npm install
+
+      - name: Build Windows exe
+        working-directory: electron
+        run: npm run build-win
+
+      - name: Upload exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: FluentChat-Windows
+          path: electron/dist/*.exe
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: electron
+        run: npm install
+
+      - name: Build Linux AppImage
+        working-directory: electron
+        run: npm run build-linux
+
+      - name: Upload AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: FluentChat-Linux
+          path: electron/dist/*.AppImage
+
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install dependencies
+        working-directory: mobile
+        run: npm install
+
+      - name: Init Capacitor
+        working-directory: mobile
+        run: npx cap init FluentChat com.fluentchat.app --web-dir ../public
+
+      - name: Add Android
+        working-directory: mobile
+        run: npx cap add android
+
+      - name: Sync
+        working-directory: mobile
+        run: npx cap sync android
+
+      - name: Build APK
+        working-directory: mobile/android
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: FluentChat-Android
+          path: mobile/android/app/build/outputs/apk/debug/*.apk

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FluentChat v2.0</title>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body data-theme="light" data-accent="blue" class="mode-normal">
+
+  <div id="loadingScreen" class="loading-screen">
+    <div class="loading-card">
+      <div class="loading-logo"><i class="fa-solid fa-comment-dots"></i></div>
+      <h2>FluentChat</h2>
+      <p style="color:rgba(255,255,255,.7);font-size:13px;margin-top:8px">v2.0 - Hybrid Engine</p>
+      <div class="loading-bar"><div class="loading-progress"></div></div>
+    </div>
+  </div>
+
+  <div id="loginScreen" class="login-screen hidden">
+    <div class="login-card">
+      <div class="login-logo"><i class="fa-solid fa-comment-dots"></i></div>
+      <h1>FluentChat</h1>
+      <p>تواصل مع أصدقائك بشكل سلس وسريع</p>
+      <button id="googleLoginBtn" class="google-btn">
+        <img src="https://www.google.com/favicon.ico" width="20" height="20" alt="G"/>
+        تسجيل الدخول بـ Google
+      </button>
+      <div class="login-features">
+        <div class="feature-item"><i class="fa-solid fa-bolt"></i><span>مزامنة فورية</span></div>
+        <div class="feature-item"><i class="fa-solid fa-shield"></i><span>آمن</span></div>
+        <div class="feature-item"><i class="fa-solid fa-mobile"></i><span>جميع الأجهزة</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="appScreen" class="app hidden">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div class="brand">
+          <div class="brand-icon"><i class="fa-solid fa-comment-dots"></i></div>
+          <div><h1>FluentChat</h1><p id="currentUserName">v2.0</p></div>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" id="newChatBtn" title="دردشة جديدة"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="icon-btn" id="cinemaBtn" title="Cinema Mode"><i class="fa-solid fa-film"></i></button>
+          <button class="icon-btn" id="settingsBtn" title="الإعدادات"><i class="fa-solid fa-gear"></i></button>
+        </div>
+      </div>
+      <div class="current-user-bar" id="currentUserBar">
+        <div class="cu-avatar" id="cuAvatar"></div>
+        <div class="cu-info">
+          <span id="cuName">...</span>
+          <span class="online-dot">● متصل</span>
+        </div>
+        <button class="icon-btn" id="logoutBtn" title="خروج"><i class="fa-solid fa-right-from-bracket"></i></button>
+      </div>
+      <div class="search-wrap">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="searchInput" type="text" placeholder="ابحث..."/>
+      </div>
+      <div class="chats-label">المحادثات</div>
+      <div class="chat-list" id="chatList">
+        <div class="empty-chats">
+          <i class="fa-regular fa-comment-dots"></i>
+          <p>لا توجد محادثات</p>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="bt-status" id="btStatus">
+          <i class="fa-solid fa-bluetooth-b"></i>
+          <span id="btStatusText">البلوتوث غير مفعل</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-card">
+          <div class="welcome-logo"><i class="fa-solid fa-comments"></i></div>
+          <h2 id="welcomeName">مرحباً!</h2>
+          <p>اختر محادثة أو ابحث عن صديق</p>
+          <div class="welcome-actions">
+            <button class="primary-btn" id="welcomeNewChat"><i class="fa-solid fa-plus"></i> دردشة جديدة</button>
+            <button class="secondary-btn" id="welcomeCinema"><i class="fa-solid fa-film"></i> Cinema</button>
+            <button class="secondary-btn" id="welcomeSettings"><i class="fa-solid fa-palette"></i> المظهر</button>
+          </div>
+          <div class="sync-badge"><i class="fa-solid fa-rotate"></i> مزامنة فورية على جميع أجهزتك</div>
+        </div>
+      </section>
+
+      <section class="chat-screen hidden" id="chatScreen">
+        <header class="chat-header">
+          <div class="chat-user">
+            <button class="icon-btn mobile-only" id="backBtn"><i class="fa-solid fa-arrow-right"></i></button>
+            <div class="avatar" id="chatAvatar">س</div>
+            <div class="chat-user-info">
+              <h3 id="chatName">اسم</h3>
+              <p id="chatStatus">متصل</p>
+            </div>
+          </div>
+          <div class="chat-actions">
+            <button class="icon-btn" id="attachBtn" title="مرفق"><i class="fa-solid fa-paperclip"></i></button>
+            <button class="icon-btn" id="cinemaChatBtn" title="Cinema"><i class="fa-solid fa-film"></i></button>
+            <button class="icon-btn" id="profileBtn" title="معلومات"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+        </header>
+        <div class="messages" id="messages"></div>
+        <div class="typing-wrap hidden" id="typingWrap">
+          <div class="typing-dots"><span></span><span></span><span></span></div>
+          <small>يكتب...</small>
+        </div>
+        <footer class="composer">
+          <button class="icon-btn" id="emojiBtn"><i class="fa-regular fa-face-smile"></i></button>
+          <button class="icon-btn" id="attachBtn2" title="مرفق"><i class="fa-solid fa-paperclip"></i></button>
+          <input type="file" id="fileInput" style="display:none" multiple/>
+          <textarea id="messageInput" rows="1" placeholder="اكتب رسالة..."></textarea>
+          <button class="send-btn" id="sendBtn"><i class="fa-solid fa-paper-plane"></i></button>
+          <div class="emoji-picker hidden" id="emojiPicker"></div>
+        </footer>
+      </section>
+    </main>
+
+    <aside class="profile-panel hidden" id="profilePanel">
+      <div class="panel-header">
+        <h3>معلومات</h3>
+        <button class="icon-btn" id="closeProfileBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="profile-content">
+        <div class="profile-avatar" id="profileAvatar">س</div>
+        <h4 id="profileName">الاسم</h4>
+        <p id="profileEmail" class="profile-email">الإيميل</p>
+        <div class="profile-status online" id="profileStatusDot"><i class="fa-solid fa-circle"></i> متصل</div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal hidden" id="settingsModal">
+    <div class="modal-card modal-large">
+      <div class="panel-header">
+        <h3>⚙️ الإعدادات</h3>
+        <button class="icon-btn" id="closeSettingsBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="settings-section">
+        <label><i class="fa-solid fa-gauge-high"></i> مستوى الأداء</label>
+        <div class="perf-options">
+          <button class="perf-btn" data-mode="lightweight">
+            <div class="perf-icon"><i class="fa-solid fa-feather"></i></div>
+            <div class="perf-info">
+              <h4>Super Lightweight</h4>
+              <p>للأجهزة الضعيفة - Toshiba i3</p>
+            </div>
+          </button>
+          <button class="perf-btn active" data-mode="normal">
+            <div class="perf-icon"><i class="fa-solid fa-laptop"></i></div>
+            <div class="perf-info">
+              <h4>Normal</h4>
+              <p>التوازن المثالي - i5/i7</p>
+            </div>
+          </button>
+          <button class="perf-btn" data-mode="ultra">
+            <div class="perf-icon"><i class="fa-solid fa-rocket"></i></div>
+            <div class="perf-info">
+              <h4>Ultra</h4>
+              <p>3D + Glassmorphism + Particles</p>
+            </div>
+          </button>
+        </div>
+        <button class="auto-detect-btn" id="autoBenchmarkBtn">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> كشف تلقائي لمستوى الأداء
+        </button>
+        <div class="benchmark-result hidden" id="benchmarkResult"></div>
+      </div>
+
+      <div class="settings-section">
+        <label><i class="fa-solid fa-moon"></i> المظهر</label>
+        <div class="theme-options">
+          <button class="theme-btn active" data-theme="light"><i class="fa-solid fa-sun"></i> فاتح</button>
+          <button class="theme-btn" data-theme="dark"><i class="fa-solid fa-moon"></i> داكن</button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <label><i class="fa-solid fa-palette"></i> لون التمييز</label>
+        <div class="accent-options">
+          <button class="accent blue active" data-accent="blue"></button>
+          <button class="accent purple" data-accent="purple"></button>
+          <button class="accent green" data-accent="green"></button>
+          <button class="accent orange" data-accent="orange"></button>
+          <button class="accent pink" data-accent="pink"></button>
+          <button class="accent red" data-accent="red"></button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <label><i class="fa-solid fa-bluetooth-b"></i> البلوتوث (P2P)</label>
+        <div class="bt-settings">
+          <div class="toggle-row">
+            <span>تفعيل البلوتوث</span>
+            <button class="toggle-btn" id="btToggle"><span class="toggle-dot"></span></button>
+          </div>
+          <button class="secondary-btn" id="btScanBtn" style="width:100%;margin-top:10px">
+            <i class="fa-solid fa-magnifying-glass"></i> بحث عن أجهزة قريبة
+          </button>
+          <div class="bt-devices" id="btDevices"></div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <label><i class="fa-solid fa-chart-line"></i> مراقب الأداء</label>
+        <div class="toggle-row">
+          <span>إظهار FPS + RAM</span>
+          <button class="toggle-btn" id="perfToggle"><span class="toggle-dot"></span></button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <label><i class="fa-solid fa-download"></i> التطبيقات</label>
+        <a href="/download.html" class="secondary-btn" style="width:100%;text-decoration:none;text-align:center;display:block">
+          <i class="fa-solid fa-download"></i> صفحة التحميل
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Chat Modal -->
+  <div class="modal hidden" id="newChatModal">
+    <div class="modal-card">
+      <div class="panel-header">
+        <h3>💬 دردشة جديدة</h3>
+        <button class="icon-btn" id="closeNewChatBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-search">
+        <div class="search-wrap" style="margin:0">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input id="userSearchInput" type="text" placeholder="ابحث بالاسم أو الإيميل..."/>
+        </div>
+      </div>
+      <div class="search-results" id="searchResults">
+        <div class="search-hint">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <p>اكتب للبحث</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload Progress -->
+  <div class="upload-overlay hidden" id="uploadOverlay">
+    <div class="upload-card">
+      <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+      <h4 id="uploadFileName">جاري الرفع...</h4>
+      <div class="upload-progress-bar">
+        <div class="upload-progress-fill" id="uploadProgressFill"></div>
+      </div>
+      <p id="uploadProgressText">0%</p>
+      <div class="upload-actions">
+        <button class="secondary-btn" id="uploadPauseBtn"><i class="fa-solid fa-pause"></i> إيقاف</button>
+        <button class="secondary-btn" id="uploadCancelBtn" style="color:#ef4444"><i class="fa-solid fa-xmark"></i> إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    if("serviceWorker" in navigator){
+      navigator.serviceWorker.register("/sw.js").then(function(r){console.log("SW OK")}).catch(function(e){console.log("SW fail")});
+    }
+  </script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "name": "FluentChat - دردشة فورية",
+  "short_name": "FluentChat",
+  "description": "تطبيق دردشة هجين: واي فاي + بلوتوث مع مزامنة فورية",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a84ff",
+  "theme_color": "#0a84ff",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["social", "communication"],
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/72x72/0a84ff/ffffff?text=FC",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/96x96/0a84ff/ffffff?text=FC",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/128x128/0a84ff/ffffff?text=FC",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/144x144/0a84ff/ffffff?text=FC",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/152x152/0a84ff/ffffff?text=FC",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/192x192/0a84ff/ffffff?text=FC",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://via.placeholder.com/384x384/0a84ff/ffffff?text=FC",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/0a84ff/ffffff?text=FC",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
